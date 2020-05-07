@@ -72,7 +72,7 @@ class generator(nn.Module):
 		l7 = self.linear_7(l6)
 
 		#l7 = torch.clamp(l7, min=0, max=1)
-		l7 = torch.max(torch.min(l7, l7*0.99+0.01), l7*0.01)
+		l7 = torch.max(torch.min(l7, l7*0.01+0.99), l7*0.01)
 		
 		return l7
 

@@ -72,7 +72,7 @@ class generator(nn.Module):
 		l7 = self.linear_7(l6)
 
 		#l7 = torch.clamp(l7, min=0, max=1)
-		l7 = torch.max(torch.min(l7, l7*0.99+0.01), l7*0.01)
+		l7 = torch.max(torch.min(l7, l7*0.01+0.99), l7*0.01)
 		
 		return l7
 
@@ -152,13 +152,15 @@ class IM_AE(object):
 		if self.sample_vox_size==16:
 			self.load_point_batch_size = 16*16*16
 			self.point_batch_size = 16*16*16
+			self.shape_batch_size = 32
 		elif self.sample_vox_size==32:
 			self.load_point_batch_size = 16*16*16
 			self.point_batch_size = 16*16*16
+			self.shape_batch_size = 32
 		elif self.sample_vox_size==64:
 			self.load_point_batch_size = 16*16*16*4
-			self.point_batch_size = 16*16*16
-		self.shape_batch_size = 8
+			self.point_batch_size = 16*16*16*4
+			self.shape_batch_size = 16
 		self.input_size = 64 #input voxel grid size
 
 		self.ef_dim = 32
@@ -659,6 +661,6 @@ class IM_AE(object):
 			#vertices = self.optimize_mesh(vertices,model_z)
 			write_ply(config.sample_dir+"/"+"out"+str(t)+".ply", vertices, triangles)
 			
-			print("[sample GAN]")
+			print("[sample Z]")
 
 
