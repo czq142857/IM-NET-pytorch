@@ -64,9 +64,8 @@ Since our network takes point-value pairs, the voxel models require further samp
 For data preparation, please see directory [point_sampling](https://github.com/czq142857/IM-NET/tree/master/point_sampling).
 
 We provide the ready-to-use datasets in hdf5 format, together with our pre-trained network weights.
-(Found a bug. Will update in a week.)
 
-- [IM-NET-pytorch]()
+- [IM-NET-pytorch](https://drive.google.com/open?id=1ykE6MB2iW1Dk5t4wRx85MgpggeoyAqu3)
 
 Backup links:
 

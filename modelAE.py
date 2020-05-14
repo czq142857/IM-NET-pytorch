@@ -159,8 +159,8 @@ class IM_AE(object):
 			self.shape_batch_size = 32
 		elif self.sample_vox_size==64:
 			self.load_point_batch_size = 16*16*16*4
-			self.point_batch_size = 16*16*16*4
-			self.shape_batch_size = 16
+			self.point_batch_size = 16*16*16
+			self.shape_batch_size = 32
 		self.input_size = 64 #input voxel grid size
 
 		self.ef_dim = 32
