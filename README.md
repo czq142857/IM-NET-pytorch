@@ -69,7 +69,7 @@ We provide the ready-to-use datasets in hdf5 format, together with our pre-train
 
 Backup links:
 
-- [IM-NET-pytorch]() (pwd: )
+- [IM-NET-pytorch](https://pan.baidu.com/s/10695F20-xTWCrltYGhBPcQ) (pwd: bqex)
 
 
 ## Usage
