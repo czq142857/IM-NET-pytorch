@@ -654,3 +654,48 @@ class IM_SVR(object):
 			write_ply_point_normal(config.sample_dir+"/"+str(t)+"_pc.ply", sampled_points_normals)
 			
 			print("[sample]")
+
+	def test_image(self, config):
+		import cv2
+		#load previous checkpoint
+		checkpoint_txt = os.path.join(self.checkpoint_path, "checkpoint")
+		if os.path.exists(checkpoint_txt):
+			fin = open(checkpoint_txt)
+			model_dir = fin.readline().strip()
+			fin.close()
+			self.im_network.load_state_dict(torch.load(model_dir))
+			print(" [*] Load SUCCESS")
+		else:
+			print(" [!] Load failed...")
+			return
+		
+		add_out = "./out/"
+		add_image = "./image/"
+		if not os.path.exists(add_out): os.makedirs(add_out)
+		if not os.path.exists(add_image):
+			print("ERROR: image folder does not exist: ", add_image)
+			return
+
+		test_num = 16
+		self.im_network.eval()
+		for t in range(test_num):
+			img_add = add_image+str(t)+".png"
+			print(t,test_num,img_add)
+			
+			if not os.path.exists(img_add):
+				print("ERROR: image does not exist: ", img_add)
+				return
+			imgo_ = cv2.imread(img_add, cv2.IMREAD_GRAYSCALE)
+			batch_view_ = cv2.resize(imgo_, (self.crop_size,self.crop_size)).astype(np.float32)/255.0
+			batch_view_ = np.reshape(batch_view_, [1,1,self.crop_size,self.crop_size])
+			batch_view = torch.from_numpy(batch_view_)
+			batch_view = batch_view.to(self.device)
+			model_z,_ = self.im_network(batch_view, None, None, is_training=False)
+			model_float = self.z2voxel(model_z)
+			
+			vertices, triangles = mcubes.marching_cubes(model_float, self.sampling_threshold)
+			vertices = (vertices.astype(np.float32)-0.5)/self.real_size-0.5
+			#vertices = self.optimize_mesh(vertices,model_z)
+			write_ply_triangle(add_out+str(t)+".ply", vertices, triangles)
+			
+			print("[sample image]")
