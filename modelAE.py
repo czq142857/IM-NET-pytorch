@@ -149,18 +149,8 @@ class IM_AE(object):
 		#2-- (32, 16*16*16)
 		#3-- (64, 16*16*16*4)
 		self.sample_vox_size = config.sample_vox_size
-		if self.sample_vox_size==16:
-			self.load_point_batch_size = 16*16*16
-			self.point_batch_size = 16*16*16
-			self.shape_batch_size = 32
-		elif self.sample_vox_size==32:
-			self.load_point_batch_size = 16*16*16
-			self.point_batch_size = 16*16*16
-			self.shape_batch_size = 32
-		elif self.sample_vox_size==64:
-			self.load_point_batch_size = 16*16*16*4
-			self.point_batch_size = 16*16*16
-			self.shape_batch_size = 32
+		self.point_batch_size = 16*16*16
+		self.shape_batch_size = 32
 		self.input_size = 64 #input voxel grid size
 
 		self.ef_dim = 32
@@ -181,6 +171,7 @@ class IM_AE(object):
 			self.data_points = (data_dict['points_'+str(self.sample_vox_size)][:].astype(np.float32)+0.5)/256-0.5
 			self.data_values = data_dict['values_'+str(self.sample_vox_size)][:].astype(np.float32)
 			self.data_voxels = data_dict['voxels'][:]
+			self.load_point_batch_size = self.data_points.shape[1]
 			#reshape to NCHW
 			self.data_voxels = np.reshape(self.data_voxels, [-1,1,self.input_size,self.input_size,self.input_size])
 		else:

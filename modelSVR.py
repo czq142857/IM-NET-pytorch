@@ -685,8 +685,22 @@ class IM_SVR(object):
 			if not os.path.exists(img_add):
 				print("ERROR: image does not exist: ", img_add)
 				return
-			imgo_ = cv2.imread(img_add, cv2.IMREAD_GRAYSCALE)
-			batch_view_ = cv2.resize(imgo_, (self.crop_size,self.crop_size)).astype(np.float32)/255.0
+			
+			you_are_using_3D_R2N2_rendered_images = True
+			if you_are_using_3D_R2N2_rendered_images:
+				img = cv2.imread(img_add, cv2.IMREAD_UNCHANGED)
+				imgo = img[:,:,:3]
+				imgo = cv2.cvtColor(imgo, cv2.COLOR_BGR2GRAY)
+				imga = (img[:,:,3])/255.0
+				img = imgo*imga + 255*(1-imga)
+				img = np.round(img).astype(np.uint8)
+				offset_x = int(self.crop_edge/2)
+				offset_y = int(self.crop_edge/2)
+				img = img[offset_y:offset_y+self.crop_size, offset_x:offset_x+self.crop_size]
+			else: #good luck.
+				img = cv2.imread(img_add, cv2.IMREAD_GRAYSCALE)
+
+			batch_view_ = cv2.resize(img, (self.crop_size,self.crop_size)).astype(np.float32)/255.0
 			batch_view_ = np.reshape(batch_view_, [1,1,self.crop_size,self.crop_size])
 			batch_view = torch.from_numpy(batch_view_)
 			batch_view = batch_view.to(self.device)
