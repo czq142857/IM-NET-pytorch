@@ -32,7 +32,7 @@ class generator(nn.Module):
 		self.linear_5 = nn.Linear(self.gf_dim*4, self.gf_dim*2, bias=True)
 		self.linear_6 = nn.Linear(self.gf_dim*2, self.gf_dim*1, bias=True)
 		self.linear_7 = nn.Linear(self.gf_dim*1, 1, bias=True)
-		nn.init.normal_(self.linear_1.weight, mean=0.0, std=0.02)
+		nn.init.normal_(self.linear_1.weight, mean=0.0, std=0.02) #nomalization = mapped in Normal dist
 		nn.init.constant_(self.linear_1.bias,0)
 		nn.init.normal_(self.linear_2.weight, mean=0.0, std=0.02)
 		nn.init.constant_(self.linear_2.bias,0)
@@ -201,7 +201,7 @@ class IM_AE(object):
 		self.checkpoint_manager_pointer = 0
 		#loss
 		def network_loss(G,point_value):
-			return torch.mean((G-point_value)**2)
+			return torch.mean((G-point_value)**2) #L2 norm
 		self.loss = network_loss
 
 
