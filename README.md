@@ -1,7 +1,7 @@
 # IM-NET-pytorch
-PyTorch 1.2 implementation for paper "Learning Implicit Fields for Generative Shape Modeling", [Zhiqin Chen](https://www.sfu.ca/~zhiqinc/),  [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/).
+PyTorch 1.2 implementation for paper "Learning Implicit Fields for Generative Shape Modeling", [Zhiqin Chen](https://czq142857.github.io/),  [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/).
 
-### [Project page](https://www.sfu.ca/~zhiqinc/imgan/Readme.html) |   [Paper](https://arxiv.org/abs/1812.02822)
+### [Supplementary material](https://github.com/czq142857/implicit-decoder/tree/master/supplementary_material) |   [Paper](https://arxiv.org/abs/1812.02822)
 
 ### [Original implementation](https://github.com/czq142857/implicit-decoder)
 
